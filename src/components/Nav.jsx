@@ -1,9 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
+
+import {setAuth} from '../actions/authActions'
+import {clearCart} from '../actions/cartActions'
 
 export default function Nav() {
   const cart = useSelector((state) => state.cart)
+  const {user} = useSelector(state => state.auth)
+
+  const dispatch = useDispatch()
 
   return (
     <header className='head'>
@@ -12,13 +18,16 @@ export default function Nav() {
           <li className='nav-list'>
             <Link to='/'>Products</Link>
           </li>
-          <li className='nav-list'>
+          {user && <li className='nav-list'>
             <Link to='/cart'>Cart <span className='cart-num'>
               {cart.reduce((sum, item) => sum + item.quantity, 0)}
               </span></Link>
-          </li>
+          </li>}
           <li className='nav-list'>
-            <Link to='/signin'>Sign in</Link>
+            {user ? <button onClick={() => {
+              dispatch(setAuth(null))
+              dispatch(clearCart())
+            }}>Sign out</button> : <Link to='/signin'>Sign in</Link>}
           </li>
         </ul>
       </div>

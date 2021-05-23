@@ -1,17 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { devToolsEnhancer } from 'redux-devtools-extension'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
 
 import './index.css'
 
 import App from './App'
-import { cartReducer } from './reducers/cartReducer'
+import { rootReducer } from './reducers/rootReducer'
 import reportWebVitals from './reportWebVitals'
 
-const store = createStore(cartReducer, devToolsEnhancer())
+const middlewares = [thunk]
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(...middlewares))
+)
 
 ReactDOM.render(
   <React.StrictMode>
