@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 import Nav from './components/Nav'
 import Products from './pages/Products'
 import Signin from './pages/SIgnin'
 import Cart from './pages/Cart'
+import { useAppSelector } from './store/store'
 
 import './App.css'
 
@@ -36,7 +36,7 @@ function AuthApp() {
 }
 
 function App() {
-    const { user } = useSelector((state) => state.auth)
+    const { user } = useAppSelector((state) => state.auth)
 
     const history = useHistory()
 
