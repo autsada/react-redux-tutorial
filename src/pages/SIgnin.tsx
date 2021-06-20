@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 
-import { signinAsync } from '../store/slices/authSlice'
-import { useAppDispatch, useAppSelector } from '../store/store'
+import { useSignIn } from '../hooks/useSignin'
+// import { signinAsync } from '../store/slices/authSlice'
+// import { useAppDispatch, useAppSelector } from '../store/store'
 
 export default function Signin() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const dispatch = useAppDispatch()
-    const { loading, error } = useAppSelector((state) => state.auth)
+    const { mutate: signin, isLoading, error } = useSignIn()
+    // const dispatch = useAppDispatch()
+    // const { loading, error } = useAppSelector((state) => state.auth)
 
     return (
         <div className='form'>
@@ -24,8 +26,8 @@ export default function Signin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={() => dispatch(signinAsync({ email, password }))}>
-                {loading ? 'Loading...' : 'Submit'}
+            <button onClick={() => signin({ email, password })}>
+                {isLoading ? 'Loading...' : 'Submit'}
             </button>
 
             {error && <p style={{ color: 'red', fontSize: '12px' }}>{error}</p>}

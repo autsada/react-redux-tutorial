@@ -1,21 +1,23 @@
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 
 import Item from '../components/Item'
-import { useAppSelector, useAppDispatch } from '../store/store'
-import { fetchProducts } from '../store/slices/productsSlice'
+import { useProducts } from '../hooks/useProducts'
+// import { useAppSelector, useAppDispatch } from '../store/store'
+// import { fetchProducts } from '../store/slices/productsSlice'
 // import { products } from '../data/products'
 
 export default function Products() {
-    const { products, status, error } = useAppSelector(
-        (state) => state.products
-    )
-    const dispatch = useAppDispatch()
+    const { data: products, isLoading, error } = useProducts()
+    // const { products, status, error } = useAppSelector(
+    //     (state) => state.products
+    // )
+    // const dispatch = useAppDispatch()
 
-    useEffect(() => {
-        if (status === 'idle') dispatch(fetchProducts())
-    }, [status, dispatch])
+    // useEffect(() => {
+    //     if (status === 'idle') dispatch(fetchProducts())
+    // }, [status, dispatch])
 
-    if (status === 'loading') return <h3>Loading...</h3>
+    if (isLoading) return <h3>Loading...</h3>
 
     if (error) return <p>{error}</p>
 
