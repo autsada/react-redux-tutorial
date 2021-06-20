@@ -22,3 +22,11 @@ export const products: Product[] = [
         price: 12000,
     },
 ]
+
+export function getProducts(): Promise<Product[]> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(products)
+        }, 3000)
+    })
+}
